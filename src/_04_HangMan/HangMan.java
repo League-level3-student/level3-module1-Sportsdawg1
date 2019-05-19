@@ -80,11 +80,12 @@ public class HangMan implements KeyListener {
 		return letterPos;
 	}
 	
-	void updateLabelString (int position, String s) {
-		String sub1 = labelString.substring(0, position);
-		String sub2 = labelString.substring(position + 1, labelString.length());
-		String newString = sub1 + s.substring(position, position) + sub2;
-		labelString = newString;
+	void updateLabelString (int position, char c) {
+		StringBuilder sb = new StringBuilder(labelString);
+		sb.setCharAt(position, c);
+		
+		labelString = sb.toString();
+		label.setText(labelString);
 	}
 
 	@Override
@@ -100,7 +101,7 @@ public class HangMan implements KeyListener {
 		if(hasLetter(charPressed, currentString)) {
 			System.out.println(whichLetter(charPressed, currentString) + " " + currentString);
 			letterPosition = whichLetter(charPressed, currentString);
-			updateLabelString(letterPosition, currentString);
+			updateLabelString(letterPosition, charPressed);
 			timesCorrect++;
 			if (timesCorrect == (currentString.length() + 1) && strings.size() != 0) {
 				resetWithNewString();
